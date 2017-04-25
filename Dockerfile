@@ -1,18 +1,16 @@
-FROM ubuntu:16.04
+FROM ubuntu:17.04
 USER root
 
 
 #使用国内apt-get源
-RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse\n" > /etc/apt/sources.list\
- && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse\n" >> /etc/apt/sources.list\
- && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse\n" >> /etc/apt/sources.list\
- && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse\n" >> /etc/apt/sources.list\
- && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse\n" >> /etc/apt/sources.list\
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ zesty main restricted universe multiverse\n" > /etc/apt/sources.list\
+ && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-security main restricted universe multiverse\n" >> /etc/apt/sources.list\
+ && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-updates main restricted universe multiverse\n" >> /etc/apt/sources.list\
+ && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-proposed main restricted universe multiverse\n" >> /etc/apt/sources.list\
+ && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-backports main restricted universe multiverse\n" >> /etc/apt/sources.list\
  && apt-get update\
- && apt-get install -y apt-transport-https python-software-properties software-properties-common curl wget x11vnc xvfb jwm zenity cabextract\
- && curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -\
- && echo "deb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_6.x/ xenial main\n" >> /etc/apt/sources.list.d/nodesource.list\
- && apt-get update\
+ && apt-get install -y apt-transport-https python-software-properties software-properties-common curl wget x11vnc xvfb jwm zenity cabextract xdotool\
+ && curl -sL https://deb.nodesource.com/setup_7.x | bash -\
  && apt-get install -y nodejs\
  && apt-get install -y --no-install-recommends language-pack-zh-hans fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable ttf-wqy-microhei\
  && /usr/share/locales/install-language-pack zh_CN \
@@ -28,7 +26,7 @@ RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe
 
 COPY noVNC /usr/lib/noVNC
 WORKDIR /usr/lib/noVNC/websockify
-RUN npm install --registry http://npmreg.mirrors.ustc.edu.cn
+RUN npm install
 
 ENV TZ "PRC"
 RUN echo "Asia/Shanghai" > /etc/timezone \
