@@ -2,7 +2,7 @@ FROM ubuntu:17.04
 USER root
 
 
-#使用国内apt-get源
+#使用Ubuntu官方apt-get源
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ zesty main restricted universe multiverse\n" > /etc/apt/sources.list\
  && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-security main restricted universe multiverse\n" >> /etc/apt/sources.list\
  && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-updates main restricted universe multiverse\n" >> /etc/apt/sources.list\
@@ -39,7 +39,10 @@ RUN dpkg-reconfigure -f noninteractive locales
 COPY entrypoint.sh /opt/bin/entrypoint.sh
 RUN chmod +x /opt/bin/entrypoint.sh
 
+RUN mkdir -p /data
 VOLUME /data
+WORKDIR /data
+ENV WINEPREFIX /data/wine
 
 EXPOSE 5900
 EXPOSE 80

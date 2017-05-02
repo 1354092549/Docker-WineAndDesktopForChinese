@@ -4,7 +4,6 @@ if [ ! -z $VNC_PASSWORD ];then
 	x11vnc -storepasswd $VNC_PASSWORD ~/.vnc/passwd
 	unset VNC_PASSWORD
 fi
-export WINEPREFIX='/data/wine'
 export DISPLAY=':1'
 Xvfb $DISPLAY -screen 0 1024x768x16 &
 for i in $(seq 1 10); do
@@ -16,9 +15,13 @@ for i in $(seq 1 10); do
 	sleep 0.5
 done
 jwm &
-if [ ! -f ~/.vnc/passwd ];then  
-	x11vnc -display $DISPLAY -xkb -forever -shared -nopw &
-else
-	x11vnc -display $DISPLAY -usepw -xkb -forever -shared -nopw &
+node /usr/lib/noVNC/websockify/websockify.js --web /usr/lib/noVNC/web 80 localhost:5900&
+if [ -f /data/autostart.sh ];then
+	chmod a+x /data/autostart.sh
+	/data/autostart.sh >/dev/null 2>&1 &
 fi
-node /usr/lib/noVNC/websockify/websockify.js --web /usr/lib/noVNC/web 80 localhost:5900
+if [ ! -f ~/.vnc/passwd ];then
+	x11vnc -display $DISPLAY -xkb -forever -shared -nopw
+else
+	x11vnc -display $DISPLAY -usepw -xkb -forever -shared -nopw
+fi
