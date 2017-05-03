@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 if [ ! -z $VNC_PASSWORD ];then
 	mkdir -p ~/.vnc
 	x11vnc -storepasswd $VNC_PASSWORD ~/.vnc/passwd
