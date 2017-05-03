@@ -9,7 +9,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu/ zesty main restricted universe m
  && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-proposed main restricted universe multiverse\n" >> /etc/apt/sources.list\
  && echo "deb http://archive.ubuntu.com/ubuntu/ zesty-backports main restricted universe multiverse\n" >> /etc/apt/sources.list\
  && apt-get update\
- && apt-get install -y apt-transport-https python-software-properties software-properties-common curl wget x11vnc xvfb jwm zenity cabextract xdotool\
+ && apt-get install -y apt-transport-https python-software-properties software-properties-common curl wget x11vnc xvfb jwm zenity cabextract xdotool at\
  && curl -sL https://deb.nodesource.com/setup_7.x | bash -\
  && apt-get install -y nodejs\
  && apt-get install -y --no-install-recommends language-pack-zh-hans fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable ttf-wqy-microhei\
