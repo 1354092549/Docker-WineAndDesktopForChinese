@@ -15,13 +15,18 @@ for i in $(seq 1 10); do
 	sleep 0.5
 done
 jwm &
-node /usr/lib/noVNC/websockify/websockify.js --web /usr/lib/noVNC/web 80 localhost:5900&
+node /usr/lib/noVNC/websockify/websockify.js --web /usr/lib/noVNC/web 80 localhost:5900 &
+
 if [ -f /data/autostart.sh ];then
 	chmod a+x /data/autostart.sh
 	/data/autostart.sh >/dev/null 2>&1 &
 fi
-if [ ! -f ~/.vnc/passwd ];then
-	x11vnc -display $DISPLAY -xkb -forever -shared -nopw
-else
-	x11vnc -display $DISPLAY -usepw -xkb -forever -shared -nopw
-fi
+
+while true
+do
+	if [ ! -f ~/.vnc/passwd ];then
+		x11vnc -display $DISPLAY -xkb -forever -shared -nopw
+	else
+		x11vnc -display $DISPLAY -usepw -xkb -forever -shared -nopw
+	fi
+done
