@@ -39,6 +39,11 @@ RUN dpkg-reconfigure -f noninteractive locales
 COPY entrypoint.sh /opt/bin/entrypoint.sh
 RUN chmod +x /opt/bin/entrypoint.sh
 
+#xterm中文配置
+RUN echo "" >> /etc/X11/app-defaults/XTerm \
+    echo "xterm*faceName: DejaVu Sans Mono:antialias=True:pixelsize=14" >> /etc/X11/app-defaults/XTerm \
+    echo "xterm*faceNameDoublesize: WenQuanYi Micro Hei:pixelsize=14" >> /etc/X11/app-defaults/XTerm
+
 RUN mkdir -p /data
 VOLUME /data
 WORKDIR /data
